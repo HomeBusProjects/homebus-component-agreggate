@@ -31,7 +31,6 @@ class AggregateHomeBusApp < HomeBusApp
       puts msg
     end
 
-    puts "publish to #{@uuid}"
     publish! JSON.generate(msg)
   end
 
