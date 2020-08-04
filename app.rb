@@ -26,12 +26,17 @@ class AggregateHomeBusApp < HomeBusApp
     listen!
   end
 
+  # receive does not yet properly decode the homebus protocol, so we get a raw message
   def receive!(msg)
     if options[:verbose]
       puts msg
     end
 
-    publish! JSON.generate(msg)
+    return unless msg[:contents]
+    
+    ddc = msg[:contents][:ddc]
+
+    publish! ddc, msg[:contents][:payload]
   end
 
   def manufacturer
