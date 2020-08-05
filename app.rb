@@ -11,7 +11,8 @@ class AggregateHomeBusApp < HomeBusApp
     super
 
     Dotenv.load('.env')
-    @uuids = ENV['UUIDS'].split(/\s/)
+    @uuids = ENV['SOURCE_UUIDS'].split(/\s/)
+    @ddc = ENV['SOURCE_DDC']
     @subscribed = false
   end
 
@@ -20,7 +21,7 @@ class AggregateHomeBusApp < HomeBusApp
 
   def work!
     unless @subscribed
-      @uuids.each { |uuid| subscribe_to_devices! uuid }
+      @uuids.each { |uuid| subscribe_to_source_ddc! uuid, @ddc }
     end
 
     listen!
@@ -29,14 +30,10 @@ class AggregateHomeBusApp < HomeBusApp
   # receive does not yet properly decode the homebus protocol, so we get a raw message
   def receive!(msg)
     if options[:verbose]
-      puts msg
+      puts 'received: ', msg[:payload]
     end
-
-    return unless msg[:contents]
     
-    ddc = msg[:contents][:ddc]
-
-    publish! ddc, msg[:contents][:payload]
+    publish! msg[:ddc], msg:payload]
   end
 
   def manufacturer
