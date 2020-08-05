@@ -15,5 +15,5 @@ The port will usually be 80 (its default value).
 Once it's provisioned it stores its provisioning information in `.env.provisioning`.
 
 `homebus-component-aggregate` is configured via its `.env`  file:
-- `UUIDS` - whitespace-separated list of UUIDS to aggregate
-
+- `SOURCE_UUIDS` - whitespace-separated list of UUIDS to aggregate
+- `SOURCE_DDC` - DDC to subscribe to on these sources
