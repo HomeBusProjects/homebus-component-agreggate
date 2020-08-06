@@ -33,7 +33,7 @@ class AggregateHomeBusApp < HomeBusApp
       puts 'received: ', msg[:payload]
     end
     
-    publish! msg[:ddc], msg:payload]
+    publish! msg[:ddc], msg[:payload]
   end
 
   def manufacturer
